@@ -76,6 +76,7 @@ body {
 }
 
 @keyframes slideUp {
+
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -162,13 +163,19 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.2);
 }
 
-.difficulty-buttons {
+.difficulty-buttons,
+.mode-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
 }
 
-.difficulty-btn {
+.mode-buttons {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.difficulty-btn,
+.mode-btn {
     background: var(--color-bg-tertiary);
     border: 2px solid transparent;
     border-radius: var(--radius-md);
@@ -181,30 +188,36 @@ body {
     gap: var(--space-xs);
 }
 
-.difficulty-label {
+.difficulty-label,
+.mode-label {
     font-weight: 600;
     color: var(--color-text-primary);
     font-size: 1rem;
 }
 
-.difficulty-desc {
+.difficulty-desc,
+.mode-desc {
     color: var(--color-text-tertiary);
     font-size: 0.75rem;
 }
 
-.difficulty-btn:hover {
+.difficulty-btn:hover,
+.mode-btn:hover {
     background: var(--color-bg-elevated);
     border-color: var(--color-accent-primary);
     transform: translateY(-2px);
 }
 
-.difficulty-btn.active {
+.difficulty-btn.active,
+.mode-btn.active {
     background: var(--color-accent-primary);
     border-color: var(--color-accent-primary);
 }
 
 .difficulty-btn.active .difficulty-label,
-.difficulty-btn.active .difficulty-desc {
+.difficulty-btn.active .difficulty-desc,
+.mode-btn.active .mode-label,
+.mode-btn.active .mode-desc {
     color: white;
 }
 
@@ -237,6 +250,222 @@ body {
     transform: translateY(0);
 }
 
+/* Stage Select Screen */
+.stage-select-container {
+    width: 90%;
+    max-width: 900px;
+    height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.6s ease;
+}
+
+.screen-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.back-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--space-sm);
+    transition: transform var(--transition-fast);
+}
+
+.back-btn:hover {
+    transform: translateX(-4px);
+}
+
+.stage-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.stage-item {
+    background: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.stage-item:hover {
+    border-color: var(--color-accent-primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stage-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.stage-id {
+    background: var(--gradient-primary);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.stage-score {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+}
+
+.stage-score.has-score {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.stage-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+}
+
+.stage-preview-text {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Preview Screen */
+.preview-container {
+    width: 90%;
+    max-width: 800px;
+    animation: slideUp 0.6s ease;
+}
+
+.preview-card {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xl);
+}
+
+.stage-number {
+    background: var(--gradient-primary);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    color: white;
+    font-size: 1.125rem;
+}
+
+.highscore-badge {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: #ffd700;
+    font-weight: 600;
+}
+
+.preview-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    line-height: 1.3;
+}
+
+.preview-description {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xl);
+    white-space: pre-line;
+}
+
+.preview-code-sample {
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.preview-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-md);
+}
+
+.preview-code-sample pre {
+    font-family: var(--font-code);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    overflow-x: auto;
+    line-height: 1.6;
+}
+
+.preview-actions {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.preview-btn {
+    flex: 1;
+    padding: var(--space-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.preview-btn.primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.preview-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.preview-btn.secondary {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview-btn.secondary:hover {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-accent-primary);
+}
+
+/* Typing Screen */
 .typing-container {
     width: 100%;
     height: 100%;
@@ -259,7 +488,8 @@ body {
 }
 
 .language-badge,
-.difficulty-badge {
+.difficulty-badge,
+.stage-badge {
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
@@ -274,6 +504,11 @@ body {
 .difficulty-badge {
     background: rgba(245, 87, 108, 0.2);
     color: #f5576c;
+}
+
+.stage-badge {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
 }
 
 .timer-display {
@@ -505,6 +740,7 @@ body {
     min-width: 6rem;
 }
 
+/* Results Screen */
 .results-container {
     width: 90%;
     max-width: 600px;
@@ -524,6 +760,58 @@ body {
     font-weight: 700;
     text-align: center;
     margin-bottom: var(--space-xl);
+}
+
+.new-record-badge {
+    background: var(--gradient-primary);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: var(--space-xl);
+    animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.highscore-comparison {
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.comparison-title {
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.comparison-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    font-size: 0.95rem;
+}
+
+.comparison-label {
+    color: var(--color-text-tertiary);
+}
+
+.comparison-value {
+    font-weight: 700;
+    color: var(--color-text-primary);
 }
 
 .score-display {
@@ -661,6 +949,14 @@ body {
     }
 
     .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .mode-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .stage-list {
         grid-template-columns: 1fr;
     }
 
