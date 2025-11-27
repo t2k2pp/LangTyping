@@ -1,12 +1,14 @@
-// Main Application Controller
+// Main Application Controller with Stage System
 const App = {
     state: {
-        selectedLanguage: 'javascript',
-        selectedDifficulty: 'medium',
-        currentText: '',
+        language: 'javascript',
+        difficulty: 'easy',
+        mode: 'random', // 'random' or 'select'
+        currentStage: null,
+        currentCode: '',
         startTime: null,
         timerInterval: null,
-        fileName: 'main.js'
+        isTypingActive: false
     },
 
     init() {
@@ -15,40 +17,76 @@ const App = {
     },
 
     setupEventListeners() {
-        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
-        difficultyBtns.forEach(btn => {
+        // Language selection
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            this.state.language = e.target.value;
+        });
+
+        // Difficulty selection
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                difficultyBtns.forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
-                this.state.selectedDifficulty = e.currentTarget.dataset.difficulty;
+                this.state.difficulty = e.currentTarget.dataset.difficulty;
             });
         });
 
-        document.getElementById('language-select').addEventListener('change', (e) => {
-            this.state.selectedLanguage = e.target.value;
-            this.updateFileName();
+        // Mode selection
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                this.state.mode = e.currentTarget.dataset.mode;
+            });
         });
 
+        // Start button
         document.getElementById('start-btn').addEventListener('click', () => {
+            this.handleStart();
+        });
+
+        // Back from stages
+        document.getElementById('back-from-stages').addEventListener('click', () => {
+            this.showScreen('selection-screen');
+        });
+
+        // Preview buttons
+        document.getElementById('cancel-preview-btn').addEventListener('click', () => {
+            if (this.state.mode === 'select') {
+                this.showScreen('stage-select-screen');
+            } else {
+                this.showScreen('selection-screen');
+            }
+        });
+
+        document.getElementById('start-stage-btn').addEventListener('click', () => {
             this.startTyping();
         });
 
+        // Typing controls
         document.getElementById('restart-btn').addEventListener('click', () => {
             this.restartTyping();
         });
 
         document.getElementById('exit-btn').addEventListener('click', () => {
-            this.exitToMenu();
+            this.stopTyping();
+            this.showScreen('selection-screen');
         });
 
-        document.getElementById('retry-btn').addEventListener('click', () => {
-            this.startTyping();
-        });
-
+        // Results buttons
         document.getElementById('back-to-menu-btn').addEventListener('click', () => {
             this.showScreen('selection-screen');
         });
 
+        document.getElementById('retry-btn').addEventListener('click', () => {
+            if (this.state.currentStage) {
+                this.showPreview(this.state.currentStage);
+            } else {
+                this.handleStart();
+            }
+        });
+
+        // Keyboard input
         document.addEventListener('keydown', (e) => {
             if (this.isTypingActive()) {
                 e.preventDefault();
@@ -57,75 +95,181 @@ const App = {
         });
     },
 
-    updateFileName() {
-        const fileExtensions = {
-            'english': 'txt',
-            'javascript': 'js',
-            'react': 'jsx',
-            'nodejs': 'js',
-            'c': 'c',
-            'cpp': 'cpp',
-            'csharp': 'cs',
-            'sql': 'sql',
-            'rust': 'rs',
-            'cobol': 'cob',
-            'bash': 'sh',
-            'cshell': 'csh',
-            'json': 'json',
-            'xml': 'xml',
-            'yaml': 'yml',
-            'csv': 'csv',
-            'toml': 'toml',
-            'powershell': 'ps1',
-            'dos': 'bat'
-        };
+    handleStart() {
+        if (this.state.mode === 'select') {
+            // Show stage selection screen
+            this.showStageSelection();
+        } else {
+            // Random mode - pick random stage and show preview
+            const stage = this.getRandomStage();
+            if (stage) {
+                this.showPreview(stage);
+            }
+        }
+    },
 
-        const ext = fileExtensions[this.state.selectedLanguage] || 'txt';
-        this.state.fileName = `main.${ext}`;
+    getRandomStage() {
+        const lang = this.state.language;
+        const diff = this.state.difficulty;
+
+        // Check if stages exist
+        if (StageDatabase[lang] && StageDatabase[lang][diff] && StageDatabase[lang][diff].stages) {
+            const stages = StageDatabase[lang][diff].stages;
+            if (stages.length > 0) {
+                const randomIndex = Math.floor(Math.random() * stages.length);
+                return stages[randomIndex];
+            }
+        }
+
+        // Fallback to old samples.js if no stages
+        if (CodeSamples[lang] && CodeSamples[lang][diff]) {
+            return {
+                id: 'legacy',
+                title: `${lang} - ${diff}`,
+                description: 'プログラミングの練習をしましょう！',
+                code: CodeSamples[lang][diff],
+                level: 1,
+                story: null
+            };
+        }
+
+        return null;
+    },
+
+    showStageSelection() {
+        const lang = this.state.language;
+        const diff = this.state.difficulty;
+        const stageList = document.getElementById('stage-list');
+        stageList.innerHTML = '';
+
+        if (!StageDatabase[lang] || !StageDatabase[lang][diff] || !StageDatabase[lang][diff].stages) {
+            stageList.innerHTML = '<p style="text-align: center; color: var(--color-text-tertiary);">このlanguage/difficultyにはステージがありません。</p>';
+            this.showScreen('stage-select-screen');
+            return;
+        }
+
+        const stages = StageDatabase[lang][diff].stages;
+
+        stages.forEach(stage => {
+            const stageItem = document.createElement('div');
+            stageItem.className = 'stage-item';
+
+            const highScore = ScoreManager.getHighScore(lang, stage.id);
+
+            stageItem.innerHTML = `
+                <div class="stage-item-header">
+                    <span class="stage-id">${stage.id}</span>
+                    <span class="stage-score ${highScore ? 'has-score' : ''}">
+                        ${highScore ? `🏆 ${highScore.score}` : '未プレイ'}
+                    </span>
+                </div>
+                <div class="stage-title">${stage.title}</div>
+                <div class="stage-preview-text">${stage.description.substring(0, 100)}...</div>
+            `;
+
+            stageItem.addEventListener('click', () => {
+                this.showPreview(stage);
+            });
+
+            stageList.appendChild(stageItem);
+        });
+
+        this.showScreen('stage-select-screen');
+    },
+
+    showPreview(stage) {
+        this.state.currentStage = stage;
+        this.state.currentCode = stage.code;
+
+        const lang = this.state.language;
+        const highScore = ScoreManager.getHighScore(lang, stage.id);
+
+        document.getElementById('preview-stage-number').textContent = stage.id;
+        document.getElementById('preview-title').textContent = stage.title;
+        document.getElementById('preview-description').textContent = stage.description;
+        document.getElementById('preview-code').textContent = stage.code;
+
+        const highScoreBadge = document.getElementById('preview-highscore');
+        if (highScore) {
+            document.getElementById('preview-hs-value').textContent = highScore.score;
+            highScoreBadge.style.display = 'inline-block';
+        } else {
+            highScoreBadge.style.display = 'none';
+        }
+
+        this.showScreen('preview-screen');
     },
 
     startTyping() {
-        this.updateFileName();
-        const lang = this.state.selectedLanguage;
-        const diff = this.state.selectedDifficulty;
-        this.state.currentText = CodeSamples[lang][diff];
+        if (!this.state.currentCode) return;
 
-        document.getElementById('current-language').textContent =
-            document.querySelector(`option[value="${lang}"]`).textContent;
-        document.getElementById('current-difficulty').textContent =
-            diff.charAt(0).toUpperCase() + diff.slice(1);
-        document.getElementById('file-name').textContent = this.state.fileName;
+        // Update header
+        const langDisplay = this.state.language.charAt(0).toUpperCase() + this.state.language.slice(1);
+        const diffDisplay = this.state.difficulty.charAt(0).toUpperCase() + this.state.difficulty.slice(1);
+        document.getElementById('current-language').textContent = langDisplay;
+        document.getElementById('current-difficulty').textContent = diffDisplay;
 
-        TypingEngine.init(this.state.currentText);
+        const stageBadge = document.getElementById('current-stage');
+        if (this.state.currentStage && this.state.currentStage.id !== 'legacy') {
+            stageBadge.textContent = this.state.currentStage.id;
+            stageBadge.style.display = 'inline-block';
+        } else {
+            stageBadge.style.display = 'none';
+        }
+
+        // Set file name
+        const fileExt = this.getFileExtension(this.state.language);
+        document.getElementById('file-name').textContent = `main.${fileExt}`;
+
+        // Initialize typing engine
+        TypingEngine.init(this.state.currentCode);
+
+        // Start timer
         this.state.startTime = Date.now();
+        this.state.isTypingActive = true;
         this.startTimer();
-        this.updateStats();
 
         this.showScreen('typing-screen');
     },
 
-    restartTyping() {
-        this.stopTimer();
-        TypingEngine.init(this.state.currentText);
-        this.state.startTime = Date.now();
-        this.startTimer();
-        this.updateStats();
+    getFileExtension(lang) {
+        const extensions = {
+            javascript: 'js', react: 'jsx', nodejs: 'js',
+            c: 'c', cpp: 'cpp', csharp: 'cs',
+            rust: 'rs', sql: 'sql', cobol: 'cob',
+            bash: 'sh', cshell: 'csh',
+            json: 'json', xml: 'xml', yaml: 'yml',
+            csv: 'csv', toml: 'toml',
+            dos: 'bat', powershell: 'ps1',
+            english: 'txt'
+        };
+        return extensions[lang] || 'txt';
     },
 
-    exitToMenu() {
-        this.stopTimer();
-        this.showScreen('selection-screen');
+    startTimer() {
+        this.state.timerInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - this.state.startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent =
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    },
+
+    stopTimer() {
+        if (this.state.timerInterval) {
+            clearInterval(this.state.timerInterval);
+            this.state.timerInterval = null;
+        }
     },
 
     handleTyping(e) {
-        if (e.ctrlKey || e.altKey || e.metaKey) return;
-        if (e.key === 'F5' || e.key === 'F12') return;
-
         let char = e.key;
 
+        // Handle special keys
         if (char === 'Enter') char = '\n';
         else if (char === 'Tab') char = '\t';
-        else if (char.length > 1) return;
+        else if (char.length > 1) return; // Ignore other special keys
 
         const isCorrect = TypingEngine.handleKeyPress(char);
         this.updateStats();
@@ -137,69 +281,98 @@ const App = {
 
     updateStats() {
         const accuracy = TypingEngine.getAccuracy();
-        const elapsed = this.getElapsedSeconds();
-        const cpm = elapsed > 0 ? Math.round((TypingEngine.currentPosition / elapsed) * 60) : 0;
+        const elapsed = (Date.now() - this.state.startTime) / 1000;
+        const cpm = TypingEngine.getCPM(elapsed);
 
-        document.getElementById('accuracy').textContent = accuracy + '%';
-        document.getElementById('speed').textContent = cpm + ' CPM';
+        document.getElementById('accuracy').textContent = `${accuracy.toFixed(1)}%`;
+        document.getElementById('speed').textContent = `${Math.round(cpm)} CPM`;
         document.getElementById('errors').textContent = TypingEngine.errors;
     },
 
     finishTyping() {
+        this.state.isTypingActive = false;
         this.stopTimer();
-        const elapsed = this.getElapsedSeconds();
-        const accuracy = TypingEngine.getAccuracy();
-        const characterCount = this.state.currentText.length;
 
+        const elapsed = (Date.now() - this.state.startTime) / 1000;
         const result = ScoringSystem.calculateScore(
             elapsed,
-            accuracy,
-            this.state.selectedDifficulty,
-            characterCount
+            TypingEngine.correctKeystrokes,
+            TypingEngine.totalKeystrokes,
+            this.state.difficulty,
+            this.state.currentCode.length
         );
 
-        this.showResults(result, elapsed, accuracy);
+        this.showResults(result, elapsed);
     },
 
-    showResults(result, elapsed, accuracy) {
+    showResults(result, elapsed) {
+        // Check for new record
+        const lang = this.state.language;
+        const stageId = this.state.currentStage ? this.state.currentStage.id : 'legacy';
+
+        const scoreData = {
+            score: result.score,
+            accuracy: result.accuracy,
+            cpm: result.cpm,
+            errors: TypingEngine.errors,
+            time: elapsed,
+            rank: result.rank
+        };
+
+        const previousScore = ScoreManager.getHighScore(lang, stageId);
+        const isNewRecord = ScoreManager.saveHighScore(lang, stageId, scoreData);
+
+        // Display results
         document.getElementById('rank').textContent = result.rank;
         document.getElementById('final-score').textContent = result.score;
         document.getElementById('result-time').textContent = ScoringSystem.formatTime(elapsed);
-        document.getElementById('result-accuracy').textContent = accuracy + '%';
-        document.getElementById('result-speed').textContent = result.cpm;
+        document.getElementById('result-accuracy').textContent = `${result.accuracy.toFixed(1)}%`;
+        document.getElementById('result-speed').textContent = Math.round(result.cpm);
         document.getElementById('result-errors').textContent = TypingEngine.errors;
 
-        const progress = Math.min(100, (result.score / 500) * 100);
-        const circumference = 2 * Math.PI * 85;
-        const offset = circumference - (progress / 100) * circumference;
+        // Animate score ring
+        const ring = document.getElementById('score-ring');
+        const circumference = 534;
+        const offset = circumference - (result.accuracy / 100) * circumference;
+        ring.style.strokeDashoffset = offset;
+
+        // Show new record badge
+        const newRecordBadge = document.getElementById('new-record-badge');
+        if (isNewRecord) {
+            newRecordBadge.style.display = 'block';
+        } else {
+            newRecordBadge.style.display = 'none';
+        }
+
+        // Show high score comparison
+        const comparisonDiv = document.getElementById('highscore-comparison');
+        if (previousScore && !isNewRecord) {
+            comparisonDiv.style.display = 'block';
+            document.getElementById('current-score-display').textContent = result.score;
+            document.getElementById('previous-best-display').textContent = previousScore.score;
+        } else {
+            comparisonDiv.style.display = 'none';
+        }
 
         this.showScreen('results-screen');
-
-        setTimeout(() => {
-            const ring = document.getElementById('score-ring');
-            if (ring) {
-                ring.style.strokeDashoffset = offset;
-            }
-        }, 100);
     },
 
-    startTimer() {
-        this.state.timerInterval = setInterval(() => {
-            const elapsed = this.getElapsedSeconds();
-            document.getElementById('timer').textContent = ScoringSystem.formatTime(elapsed);
-        }, 1000);
-    },
+    restartTyping() {
+        this.stopTimer();
+        this.state.isTypingActive = false;
 
-    stopTimer() {
-        if (this.state.timerInterval) {
-            clearInterval(this.state.timerInterval);
-            this.state.timerInterval = null;
+        if (this.state.currentStage) {
+            this.showPreview(this.state.currentStage);
         }
     },
 
-    getElapsedSeconds() {
-        if (!this.state.startTime) return 0;
-        return Math.floor((Date.now() - this.state.startTime) / 1000);
+    stopTyping() {
+        this.state.isTypingActive = false;
+        this.stopTimer();
+    },
+
+    isTypingActive() {
+        return this.state.isTypingActive;
     },
 
     showScreen(screenId) {
@@ -207,13 +380,10 @@ const App = {
             screen.classList.remove('active');
         });
         document.getElementById(screenId).classList.add('active');
-    },
-
-    isTypingActive() {
-        return document.getElementById('typing-screen').classList.contains('active');
     }
 };
 
+// Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
