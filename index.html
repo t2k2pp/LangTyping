@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Typing Master - タイピング学習アプリ</title>
+    <meta name="description" content="プログラミング言語とタイピングを同時に学べる学習アプリ">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Selection Screen -->
+    <div id="selection-screen" class="screen active">
+        <div class="selection-container">
+            <h1 class="app-title">
+                <span class="title-icon">⌨️</span>
+                Code Typing Master
+            </h1>
+            <p class="app-subtitle">タイピングとプログラミングを同時に学ぶ</p>
+            
+            <div class="selection-card">
+                <div class="form-group">
+                    <label for="language-select" class="form-label">
+                        <span class="label-icon">💻</span>
+                        言語を選択
+                    </label>
+                    <select id="language-select" class="select-input">
+                        <option value="english">English - 英語</option>
+                        <option value="c">C Language</option>
+                        <option value="javascript" selected>JavaScript</option>
+                        <option value="react">React</option>
+                        <option value="nodejs">Node.js</option>
+                        <option value="sql">SQL</option>
+                        <option value="rust">Rust</option>
+                        <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="cshell">C Shell</option>
+                        <option value="bash">Bash Shell</option>
+                        <option value="yaml">YAML</option>
+                        <option value="csv">CSV</option>
+                        <option value="xml">XML</option>
+                        <option value="json">JSON</option>
+                        <option value="toml">TOML</option>
+                        <option value="dos">DOS Prompt</option>
+                        <option value="powershell">PowerShell</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">📊</span>
+                        難易度を選択
+                    </label>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy">
+                            <span class="difficulty-label">Easy</span>
+                            <span class="difficulty-desc">50-100文字</span>
+                        </button>
+                        <button class="difficulty-btn active" data-difficulty="medium">
+                            <span class="difficulty-label">Medium</span>
+                            <span class="difficulty-desc">100-250文字</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <span class="difficulty-label">Hard</span>
+                            <span class="difficulty-desc">250-500文字</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="start-btn">
+                    <span class="btn-text">スタート</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typing Screen -->
+    <div id="typing-screen" class="screen">
+        <div class="typing-container">
+            <!-- Header -->
+            <div class="typing-header">
+                <div class="header-info">
+                    <span class="language-badge" id="current-language">JavaScript</span>
+                    <span class="difficulty-badge" id="current-difficulty">Medium</span>
+                </div>
+                <div class="timer-display">
+                    <span class="timer-icon">⏱️</span>
+                    <span id="timer">0:00</span>
+                </div>
+            </div>
+
+            <!-- Code Editor Area -->
+            <div class="code-editor">
+                <div class="editor-header">
+                    <div class="editor-tabs">
+                        <div class="editor-tab active">
+                            <span class="tab-icon">📄</span>
+                            <span id="file-name">main.js</span>
+                        </div>
+                    </div>
+                    <div class="editor-actions">
+                        <button class="editor-action-btn" id="restart-btn" title="最初からやり直す">
+                            <span>↻</span>
+                        </button>
+                        <button class="editor-action-btn" id="exit-btn" title="終了">
+                            <span>✕</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-content">
+                    <div class="line-numbers" id="line-numbers"></div>
+                    <pre class="code-text" id="code-text"></pre>
+                </div>
+                <div class="editor-footer">
+                    <div class="stats">
+                        <span class="stat-item">
+                            <span class="stat-label">正確性:</span>
+                            <span id="accuracy">100%</span>
+                        </span>
+                        <span class="stat-item">
+                            <span class="stat-label">速度:</span>
+                            <span id="speed">0 CPM</span>
+                        </span>
+                        <span class="stat-item">
+                            <span class="stat-label">誤タイプ:</span>
+                            <span id="errors">0</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Software Keyboard -->
+            <div class="keyboard-container">
+                <div id="software-keyboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="screen">
+        <div class="results-container">
+            <div class="results-card">
+                <h2 class="results-title">結果</h2>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <svg class="score-ring" viewBox="0 0 200 200">
+                            <circle class="score-ring-bg" cx="100" cy="100" r="85"></circle>
+                            <circle class="score-ring-progress" id="score-ring" cx="100" cy="100" r="85"></circle>
+                        </svg>
+                        <div class="score-content">
+                            <div class="rank" id="rank">A</div>
+                            <div class="score-value" id="final-score">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-value" id="result-time">0:00</div>
+                        <div class="stat-label">実行時間</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✓</div>
+                        <div class="stat-value" id="result-accuracy">100%</div>
+                        <div class="stat-label">正確性</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value" id="result-speed">0</div>
+                        <div class="stat-label">CPM</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-value" id="result-errors">0</div>
+                        <div class="stat-label">誤タイプ</div>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="result-btn secondary" id="back-to-menu-btn">
+                        <span>メニューに戻る</span>
+                    </button>
+                    <button class="result-btn primary" id="retry-btn">
+                        <span>もう一度</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="samples.js"></script>
+    <script src="keyboard.js"></script>
+    <script src="typing-engine.js"></script>
+    <script src="scoring.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
