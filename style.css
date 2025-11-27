@@ -34,7 +34,11 @@
     --transition-base: 250ms ease;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: var(--font-primary);
@@ -72,8 +76,15 @@ body {
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .app-title {
@@ -124,7 +135,9 @@ body {
     font-size: 0.95rem;
 }
 
-.label-icon { font-size: 1.25rem; }
+.label-icon {
+    font-size: 1.25rem;
+}
 
 .select-input {
     width: 100%;
@@ -139,7 +152,9 @@ body {
     transition: all var(--transition-base);
 }
 
-.select-input:hover { border-color: var(--color-accent-primary); }
+.select-input:hover {
+    border-color: var(--color-accent-primary);
+}
 
 .select-input:focus {
     outline: none;
@@ -189,7 +204,9 @@ body {
 }
 
 .difficulty-btn.active .difficulty-label,
-.difficulty-btn.active .difficulty-desc { color: white; }
+.difficulty-btn.active .difficulty-desc {
+    color: white;
+}
 
 .start-btn {
     width: 100%;
@@ -216,7 +233,9 @@ body {
     box-shadow: var(--shadow-xl);
 }
 
-.start-btn:active { transform: translateY(0); }
+.start-btn:active {
+    transform: translateY(0);
+}
 
 .typing-container {
     width: 100%;
@@ -239,7 +258,8 @@ body {
     gap: var(--space-md);
 }
 
-.language-badge, .difficulty-badge {
+.language-badge,
+.difficulty-badge {
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
@@ -265,7 +285,9 @@ body {
     font-family: var(--font-code);
 }
 
-.timer-icon { font-size: 1.5rem; }
+.timer-icon {
+    font-size: 1.5rem;
+}
 
 .code-editor {
     flex: 1;
@@ -284,7 +306,9 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.editor-tabs { display: flex; }
+.editor-tabs {
+    display: flex;
+}
 
 .editor-tab {
     display: flex;
@@ -297,7 +321,9 @@ body {
     font-size: 0.875rem;
 }
 
-.tab-icon { font-size: 1rem; }
+.tab-icon {
+    font-size: 1rem;
+}
 
 .editor-actions {
     display: flex;
@@ -314,7 +340,9 @@ body {
     transition: color var(--transition-fast);
 }
 
-.editor-action-btn:hover { color: var(--color-text-primary); }
+.editor-action-btn:hover {
+    color: var(--color-text-primary);
+}
 
 .editor-content {
     flex: 1;
@@ -332,6 +360,7 @@ body {
     padding-right: var(--space-lg);
     user-select: none;
     min-width: 3rem;
+    white-space: pre;
 }
 
 .code-text {
@@ -345,7 +374,9 @@ body {
     word-break: keep-all;
 }
 
-.code-text .typed { color: var(--color-code-typed); }
+.code-text .typed {
+    color: var(--color-code-typed);
+}
 
 .code-text .cursor {
     background: var(--color-code-cursor);
@@ -353,8 +384,16 @@ body {
 }
 
 @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
 }
 
 .code-text .error {
@@ -380,7 +419,9 @@ body {
     font-size: 0.875rem;
 }
 
-.stat-label { color: var(--color-text-tertiary); }
+.stat-label {
+    color: var(--color-text-tertiary);
+}
 
 .keyboard-container {
     background: var(--color-bg-secondary);
@@ -436,7 +477,9 @@ body {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.key.active::after { opacity: 0.8; }
+.key.active::after {
+    opacity: 0.8;
+}
 
 .key.active span {
     position: relative;
@@ -444,14 +487,23 @@ body {
     color: white;
 }
 
-.key.space { min-width: 20rem; }
+.key.space {
+    min-width: 20rem;
+}
 
-.key.tab, .key.caps, .key.enter, .key.shift, .key.ctrl, .key.alt {
+.key.tab,
+.key.caps,
+.key.enter,
+.key.shift,
+.key.ctrl,
+.key.alt {
     min-width: 5rem;
     font-size: 0.75rem;
 }
 
-.key.backspace { min-width: 6rem; }
+.key.backspace {
+    min-width: 6rem;
+}
 
 .results-container {
     width: 90%;
@@ -604,9 +656,25 @@ body {
 }
 
 @media (max-width: 768px) {
-    .app-title { font-size: 2rem; }
-    .difficulty-buttons { grid-template-columns: 1fr; }
-    .key { min-width: 2rem; height: 2.5rem; font-size: 0.75rem; }
-    .key.space { min-width: 12rem; }
-    .stats-grid { grid-template-columns: 1fr; }
+    .app-title {
+        font-size: 2rem;
+    }
+
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .key {
+        min-width: 2rem;
+        height: 2.5rem;
+        font-size: 0.75rem;
+    }
+
+    .key.space {
+        min-width: 12rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
