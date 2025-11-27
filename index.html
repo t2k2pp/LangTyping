@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,12 @@
     <meta name="description" content="プログラミング言語とタイピングを同時に学べる学習アプリ">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Selection Screen -->
     <div id="selection-screen" class="screen active">
@@ -19,7 +23,7 @@
                 Code Typing Master
             </h1>
             <p class="app-subtitle">タイピングとプログラミングを同時に学ぶ</p>
-            
+
             <div class="selection-card">
                 <div class="form-group">
                     <label for="language-select" class="form-label">
@@ -27,25 +31,9 @@
                         言語を選択
                     </label>
                     <select id="language-select" class="select-input">
-                        <option value="english">English - 英語</option>
-                        <option value="c">C Language</option>
                         <option value="javascript" selected>JavaScript</option>
-                        <option value="react">React</option>
-                        <option value="nodejs">Node.js</option>
-                        <option value="sql">SQL</option>
-                        <option value="rust">Rust</option>
-                        <option value="cpp">C++</option>
-                        <option value="csharp">C#</option>
-                        <option value="cobol">COBOL</option>
-                        <option value="cshell">C Shell</option>
-                        <option value="bash">Bash Shell</option>
-                        <option value="yaml">YAML</option>
-                        <option value="csv">CSV</option>
-                        <option value="xml">XML</option>
-                        <option value="json">JSON</option>
-                        <option value="toml">TOML</option>
-                        <option value="dos">DOS Prompt</option>
-                        <option value="powershell">PowerShell</option>
+                        <option value="c">C Language</option>
+                        <option value="english">English - 英語</option>
                     </select>
                 </div>
 
@@ -55,17 +43,34 @@
                         難易度を選択
                     </label>
                     <div class="difficulty-buttons">
-                        <button class="difficulty-btn" data-difficulty="easy">
+                        <button class="difficulty-btn active" data-difficulty="easy">
                             <span class="difficulty-label">Easy</span>
-                            <span class="difficulty-desc">50-100文字</span>
+                            <span class="difficulty-desc">初級レベル</span>
                         </button>
-                        <button class="difficulty-btn active" data-difficulty="medium">
+                        <button class="difficulty-btn" data-difficulty="medium">
                             <span class="difficulty-label">Medium</span>
-                            <span class="difficulty-desc">100-250文字</span>
+                            <span class="difficulty-desc">中級レベル</span>
                         </button>
                         <button class="difficulty-btn" data-difficulty="hard">
                             <span class="difficulty-label">Hard</span>
-                            <span class="difficulty-desc">250-500文字</span>
+                            <span class="difficulty-desc">上級レベル</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🎮</span>
+                        選択モード
+                    </label>
+                    <div class="mode-buttons">
+                        <button class="mode-btn active" data-mode="random">
+                            <span class="mode-label">ランダム</span>
+                            <span class="mode-desc">難易度内でランダム</span>
+                        </button>
+                        <button class="mode-btn" data-mode="select">
+                            <span class="mode-label">ステージ選択</span>
+                            <span class="mode-desc">個別に選ぶ</span>
                         </button>
                     </div>
                 </div>
@@ -78,6 +83,46 @@
         </div>
     </div>
 
+    <!-- Stage Select Screen -->
+    <div id="stage-select-screen" class="screen">
+        <div class="stage-select-container">
+            <h2 class="screen-title">
+                <span class="back-btn" id="back-from-stages">←</span>
+                ステージ選択
+            </h2>
+            <div id="stage-list" class="stage-list"></div>
+        </div>
+    </div>
+
+    <!-- Stage Preview Screen -->
+    <div id="preview-screen" class="screen">
+        <div class="preview-container">
+            <div class="preview-card">
+                <div class="preview-header">
+                    <span class="stage-number" id="preview-stage-number">1-1</span>
+                    <span class="highscore-badge" id="preview-highscore" style="display: none;">
+                        🏆 ハイスコア: <span id="preview-hs-value">0</span>
+                    </span>
+                </div>
+                <h2 class="preview-title" id="preview-title"></h2>
+                <div class="preview-description" id="preview-description"></div>
+                <div class="preview-code-sample">
+                    <div class="preview-label">📝 コードプレビュー</div>
+                    <pre id="preview-code"></pre>
+                </div>
+                <div class="preview-actions">
+                    <button class="preview-btn secondary" id="cancel-preview-btn">
+                        <span>キャンセル</span>
+                    </button>
+                    <button class="preview-btn primary" id="start-stage-btn">
+                        <span>スタート！</span>
+                        <span>🚀</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Typing Screen -->
     <div id="typing-screen" class="screen">
         <div class="typing-container">
@@ -85,7 +130,8 @@
             <div class="typing-header">
                 <div class="header-info">
                     <span class="language-badge" id="current-language">JavaScript</span>
-                    <span class="difficulty-badge" id="current-difficulty">Medium</span>
+                    <span class="difficulty-badge" id="current-difficulty">Easy</span>
+                    <span class="stage-badge" id="current-stage" style="display: none;">1-1</span>
                 </div>
                 <div class="timer-display">
                     <span class="timer-icon">⏱️</span>
@@ -145,6 +191,12 @@
         <div class="results-container">
             <div class="results-card">
                 <h2 class="results-title">結果</h2>
+
+                <!-- New Record Badge -->
+                <div class="new-record-badge" id="new-record-badge" style="display: none;">
+                    🎉 新記録達成！ 🎉
+                </div>
+
                 <div class="score-display">
                     <div class="score-circle">
                         <svg class="score-ring" viewBox="0 0 200 200">
@@ -157,7 +209,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">⏱️</div>
@@ -181,6 +233,19 @@
                     </div>
                 </div>
 
+                <!-- High Score Comparison -->
+                <div class="highscore-comparison" id="highscore-comparison" style="display: none;">
+                    <div class="comparison-title">📊 ハイスコア比較</div>
+                    <div class="comparison-row">
+                        <span class="comparison-label">今回:</span>
+                        <span class="comparison-value" id="current-score-display">0</span>
+                    </div>
+                    <div class="comparison-row">
+                        <span class="comparison-label">前回ベスト:</span>
+                        <span class="comparison-value" id="previous-best-display">0</span>
+                    </div>
+                </div>
+
                 <div class="results-actions">
                     <button class="result-btn secondary" id="back-to-menu-btn">
                         <span>メニューに戻る</span>
@@ -193,10 +258,12 @@
         </div>
     </div>
 
+    <script src="stages.js"></script>
     <script src="samples.js"></script>
     <script src="keyboard.js"></script>
     <script src="typing-engine.js"></script>
     <script src="scoring.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
