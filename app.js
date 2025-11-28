@@ -238,6 +238,7 @@ const App = {
     getFileExtension(lang) {
         const extensions = {
             javascript: 'js', react: 'jsx', nodejs: 'js',
+            python: 'py',  // ← この行を追加
             c: 'c', cpp: 'cpp', csharp: 'cs',
             rust: 'rs', sql: 'sql', cobol: 'cob',
             bash: 'sh', cshell: 'csh',
