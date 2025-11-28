@@ -1,5 +1,6 @@
 // Stage Data Loader and Manager
 // データとプログラムを分離し、JSONファイルからステージ情報を動的に読み込む
+// 命名規則: stage-XX-XX.json を自動検出
 
 const StageDatabase = {
     // キャッシュ用
@@ -20,7 +21,7 @@ const StageDatabase = {
         }
 
         try {
-            // ステージディレクトリ内のJSONファイルを取得
+            // ステージディレクトリ内のJSONファイルを自動検出
             const stagesPath = `stages/${language}/${difficulty}/`;
             const stages = await this.fetchStagesFromDirectory(stagesPath);
 
@@ -38,62 +39,54 @@ const StageDatabase = {
     },
 
     /**
-     * ディレクトリ内のすべてのJSONファイルを読み込む
+     * ディレクトリ内のすべてのJSONファイルを自動検出して読み込む
+     * 命名規則: stage-XX-XX.json (XX: 00-99)
      * @param {string} path - ディレクトリパス
      * @returns {Promise<Array>} ステージデータの配列
      */
     async fetchStagesFromDirectory(path) {
-        // 既知のステージファイルリストを使用
-        // 実際のプロジェクトではサーバーサイドAPIやファイルシステムAPIを使用
-        const stageFiles = await this.getStageFileList(path);
-
         const stages = [];
-        for (const file of stageFiles) {
-            try {
-                const response = await fetch(`${path}${file}`);
-                if (response.ok) {
-                    const stageData = await response.json();
-                    stages.push(stageData);
+        let consecutiveNotFound = 0;
+        const maxConsecutiveNotFound = 10; // 連続で10個見つからなければ終了
+
+        // stage-00-01 から stage-99-99 まで試行
+        for (let level = 0; level < 100; level++) {
+            let foundInLevel = false;
+
+            // 各レベル内で番号 1-99
+            for (let num = 1; num <= 99; num++) {
+                const levelStr = level.toString().padStart(2, '0');
+                const numStr = num.toString().padStart(2, '0');
+                const fileName = `stage-${levelStr}-${numStr}.json`;
+
+                try {
+                    const response = await fetch(`${path}${fileName}`);
+                    if (response.ok) {
+                        const stageData = await response.json();
+                        stages.push(stageData);
+                        foundInLevel = true;
+                        consecutiveNotFound = 0; // リセット
+                    } else if (response.status === 404) {
+                        // このファイルは存在しない、次へ
+                        continue;
+                    }
+                } catch (error) {
+                    // ネットワークエラーなど、このファイルはスキップ
+                    continue;
                 }
-            } catch (error) {
-                console.warn(`Failed to load ${file}:`, error);
+            }
+
+            // このレベルで何も見つからなければカウント
+            if (!foundInLevel) {
+                consecutiveNotFound++;
+                // 連続で一定回数見つからなければ終了（効率化）
+                if (consecutiveNotFound >= maxConsecutiveNotFound) {
+                    break;
+                }
             }
         }
 
         return stages;
-    },
-
-    /**
-     * ステージファイルのリストを取得
-     * 注: ブラウザ環境では自動でファイル一覧を取得できないため、
-     * 手動でリストを定義するか、サーバーサイドAPIが必要
-     */
-    async getStageFileList(path) {
-        // 各言語・難易度のファイルマッピング
-        const fileMappings = {
-            'stages/javascript/easy/': [
-                'stage-00-01.json',
-                'stage-01-01.json',
-                'stage-01-02.json',
-                'stage-01-03.json',
-                'stage-02-01.json',
-                'stage-02-02.json',
-                'stage-02-03.json'
-            ],
-            'stages/javascript/medium/': [
-                // mediumステージファイル（今後追加）
-            ],
-            'stages/javascript/hard/': [
-                // hardステージファイル（今後追加）
-            ],
-            'stages/c/easy/': [
-                // Cのeasyステージファイル（今後追加）
-            ],
-            'stages/c/medium/': [],
-            'stages/c/hard/': []
-        };
-
-        return fileMappings[path] || [];
     },
 
     /**
