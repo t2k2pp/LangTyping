@@ -1,0 +1,8 @@
+{
+    "id": "4-2",
+    "level": 4,
+    "title": "📚 モジュールとインポート",
+    "description": "クラスをマスターしましたね！素晴らしい！✨\nPythonは豊富な標準ライブラリを持っています。\nimportを使って便利な機能を使いこなしましょう！💪",
+    "code": "import math\nimport random\nfrom datetime import datetime\n\nprint(f\"Pi: {math.pi}\")\nprint(f\"Square root of 16: {math.sqrt(16)}\")\nprint(f\"Random number: {random.randint(1, 100)}\")\nprint(f\"Current time: {datetime.now()}\")",
+    "story": "Pythonの冒険 - Chapter 2"
+}

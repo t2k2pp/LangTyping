@@ -1,0 +1,8 @@
+{
+    "id": "5-2",
+    "level": 5,
+    "title": "🔧 コンテキストマネージャ - with文",
+    "description": "デコレータをマスターしましたね！完璧です！🌟\nコンテキストマネージャでリソース管理を効率化！\nファイル操作などで大活躍します！You can do it! 💪",
+    "code": "class FileManager:\n    def __init__(self, filename, mode):\n        self.filename = filename\n        self.mode = mode\n        self.file = None\n    \n    def __enter__(self):\n        self.file = open(self.filename, self.mode)\n        return self.file\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        if self.file:\n            self.file.close()\n\nwith FileManager('test.txt', 'w') as f:\n    f.write('Hello, World!')",
+    "story": "Pythonマスターへの道 - 第1章"
+}

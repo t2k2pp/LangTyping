@@ -1,0 +1,8 @@
+{
+    "id": "1-2",
+    "level": 1,
+    "title": "📝 変数と型 - Pythonは柔軟！",
+    "description": "すごい！Hello Worldができました！🎉\nPythonでは型を明示的に書く必要がありません。\n変数に直接値を代入するだけ！とても簡単です！🚀",
+    "code": "name = \"Python\"\nversion = 3.12\nis_awesome = True\n\nprint(f\"Language: {name}\")\nprint(f\"Version: {version}\")\nprint(f\"Awesome: {is_awesome}\")",
+    "story": null
+}

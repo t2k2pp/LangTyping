@@ -1,0 +1,8 @@
+{
+    "id": "6-2",
+    "level": 6,
+    "title": "🌟 asyncio - 非同期プログラミング",
+    "description": "ジェネレータをマスターしましたね！信じられません！🎊\nasyncioで非同期処理をマスター！\n高性能なアプリケーション開発の鍵です！Amazing! ✨",
+    "code": "import asyncio\n\nasync def fetch_data(id):\n    print(f\"Fetching {id}...\")\n    await asyncio.sleep(1)\n    return f\"Data {id}\"\n\nasync def main():\n    tasks = [fetch_data(i) for i in range(3)]\n    results = await asyncio.gather(*tasks)\n    for result in results:\n        print(result)\n\nasyncio.run(main())",
+    "story": "Pythonマスターへの道 - 第2章"
+}

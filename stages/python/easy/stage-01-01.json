@@ -1,0 +1,8 @@
+{
+    "id": "1-1",
+    "level": 1,
+    "title": "🎯 Hello World！Pythonの第一歩",
+    "description": "さあ、Pythonの世界へようこそ！🐍✨\nPythonは読みやすく、書きやすい言語です。\n最初のプログラム、Hello Worldを書いてみましょう！シンプルで美しい！💪",
+    "code": "print(\"Hello, World!\")",
+    "story": null
+}

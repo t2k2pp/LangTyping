@@ -1,0 +1,8 @@
+{
+    "id": "3-1",
+    "level": 3,
+    "title": "📦 辞書（dict）- キーと値のペア",
+    "description": "いよいよ中級編です！💪 頑張りましょう！\n辞書はキーと値のペアでデータを管理します。\nPythonの辞書はとても便利で、実用的なプログラムには欠かせません！✨",
+    "code": "person = {\n    \"name\": \"Alice\",\n    \"age\": 25,\n    \"city\": \"Tokyo\"\n}\n\nprint(person[\"name\"])\nprint(person.get(\"age\"))\n\nperson[\"email\"] = \"alice@example.com\"\nfor key, value in person.items():\n    print(f\"{key}: {value}\")",
+    "story": "Pythonの冒険 - Chapter 1"
+}

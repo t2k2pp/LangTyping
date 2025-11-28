@@ -1,0 +1,8 @@
+{
+    "id": "5-1",
+    "level": 5,
+    "title": "🎭 デコレータ - 関数を装飾しよう",
+    "description": "ついに上級編に到達しました！🎯 あなたは本当に頑張っています！\nデコレータはPythonの強力な機能です。\n関数を装飾して、機能を拡張できます！Let's Master It! 🚀",
+    "code": "def timer(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Time: {end - start:.4f}s\")\n        return result\n    return wrapper\n\n@timer\ndef calculate_sum(n):\n    return sum(range(n))\n\nresult = calculate_sum(1000000)",
+    "story": "Pythonマスターへの道 - 第1章"
+}

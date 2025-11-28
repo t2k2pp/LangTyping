@@ -1,0 +1,8 @@
+{
+    "id": "1-3",
+    "level": 1,
+    "title": "🧮 リストの基本 - データをまとめよう",
+    "description": "いい調子です！👏\nPythonのリストは超便利！いろんな型のデータを一つにまとめられます。\nリストはPythonの強力な武器の一つです！💯",
+    "code": "fruits = [\"apple\", \"banana\", \"orange\"]\nnumbers = [1, 2, 3, 4, 5]\nmixed = [\"Python\", 3.12, True]\n\nprint(fruits[0])\nprint(len(numbers))\nprint(mixed)",
+    "story": null
+}

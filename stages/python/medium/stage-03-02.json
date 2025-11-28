@@ -1,0 +1,8 @@
+{
+    "id": "3-2",
+    "level": 3,
+    "title": "✨ リスト内包表記 - Pythonicな書き方",
+    "description": "辞書をマスターしましたね！🎉\nリスト内包表記はPythonらしい、エレガントな書き方です。\n1行でリストを生成できる、とても強力な機能です！💎",
+    "code": "numbers = [1, 2, 3, 4, 5]\nsquares = [n ** 2 for n in numbers]\nevens = [n for n in numbers if n % 2 == 0]\n\nprint(squares)\nprint(evens)\n\nmatrix = [[i * j for j in range(1, 4)] for i in range(1, 4)]\nprint(matrix)",
+    "story": "Pythonの冒険 - Chapter 1"
+}

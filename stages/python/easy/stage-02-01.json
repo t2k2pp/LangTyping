@@ -1,0 +1,8 @@
+{
+    "id": "2-1",
+    "level": 2,
+    "title": "🔄 関数の定義 - defキーワード",
+    "description": "基本はバッチリですね！✨\nPythonの関数は`def`キーワードで定義します。\nインデントでブロックを表現するのがPythonの特徴です！🎯",
+    "code": "def greet(name):\n    return f\"Hello, {name}!\"\n\ndef add(a, b):\n    return a + b\n\nmessage = greet(\"World\")\nresult = add(10, 20)\nprint(message)\nprint(result)",
+    "story": null
+}

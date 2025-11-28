@@ -1,0 +1,8 @@
+{
+    "id": "4-1",
+    "level": 4,
+    "title": "🎨 クラスの基本 - オブジェクト指向",
+    "description": "おめでとうございます！🎊 中級者の仲間入りです！\nPythonのクラスを使えば、データと振る舞いをまとめて管理できます。\n実践的なプログラミングへの大きな一歩です！Go for it! 🚀",
+    "code": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def greet(self):\n        return f\"Hi, I'm {self.name}!\"\n    \n    def birthday(self):\n        self.age += 1\n\nalice = Person(\"Alice\", 25)\nprint(alice.greet())\nalice.birthday()\nprint(f\"Age: {alice.age}\")",
+    "story": "Pythonの冒険 - Chapter 2"
+}
