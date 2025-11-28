@@ -1,0 +1,8 @@
+{
+    "id": "1-1",
+    "level": 1,
+    "title": "👋 Hello World - C言語の始まり",
+    "description": "C言語の世界へようこそ！🎯\nすべてのプログラミング言語の基礎となる、歴史あるC言語。\n最初のプログラムを書いてみましょう！Let's Start! 💪",
+    "code": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}",
+    "story": null
+}

@@ -1,0 +1,8 @@
+{
+    "id": "1-3",
+    "level": 1,
+    "title": "➕ 簡単な計算をしてみよう",
+    "description": "いい調子です！👏\nC言語も計算が得意です。足し算、引き算、掛け算、割り算…基本の四則演算をマスターしましょう！💯",
+    "code": "#include <stdio.h>\n\nint main() {\n    int a = 10;\n    int b = 5;\n    int sum = a + b;\n    int diff = a - b;\n    int prod = a * b;\n    int quot = a / b;\n    \n    printf(\"Sum: %d\\n\", sum);\n    printf(\"Diff: %d\\n\", diff);\n    printf(\"Prod: %d\\n\", prod);\n    printf(\"Quot: %d\\n\", quot);\n    \n    return 0;\n}",
+    "story": null
+}

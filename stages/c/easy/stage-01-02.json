@@ -1,0 +1,8 @@
+{
+    "id": "1-2",
+    "level": 1,
+    "title": "📝 変数の宣言 - データ型を学ぼう",
+    "description": "すごい！Hello Worldができました！🎉\n次は変数の使い方を学びましょう。C言語では型を明示的に宣言します。\nint、float、charなど、基本的なデータ型をマスターしましょう！🚀",
+    "code": "#include <stdio.h>\n\nint main() {\n    int age = 25;\n    float height = 170.5;\n    char grade = 'A';\n    \n    printf(\"Age: %d\\n\", age);\n    printf(\"Height: %.1f\\n\", height);\n    printf(\"Grade: %c\\n\", grade);\n    \n    return 0;\n}",
+    "story": null
+}

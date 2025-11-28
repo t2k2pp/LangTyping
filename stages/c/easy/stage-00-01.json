@@ -1,0 +1,8 @@
+{
+    "id": "0-1",
+    "level": 0,
+    "title": "📚 C言語予約語 - 基本キーワードを覚えよう",
+    "description": "C言語の世界へようこそ！🎉\n最初のお題は、C言語の予約語（キーワード）です。\nこれらの言葉は、C言語で特別な意味を持つ重要な言葉です。タイピングしながら自然に覚えましょう！✨",
+    "code": "auto break case char const continue\ndefault do double else enum extern\nfloat for goto if int long\nregister return short signed sizeof static\nstruct switch typedef union unsigned void\nvolatile while",
+    "story": null
+}

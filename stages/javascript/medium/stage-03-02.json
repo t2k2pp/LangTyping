@@ -1,0 +1,8 @@
+{
+    "id": "3-2",
+    "level": 3,
+    "title": "✨ 配列メソッド - map関数",
+    "description": "ループができるようになりましたね！🎉\n次は配列メソッドです。map、filter、reduceなどを使えば、\nもっとスマートにコードが書けます！エレガントなコードを目指しましょう！💎",
+    "code": "const numbers = [1, 2, 3, 4, 5];\nconst doubled = numbers.map(n => n * 2);\nconst sum = numbers.reduce((acc, n) => acc + n, 0);\nconsole.log(doubled);\nconsole.log(sum);",
+    "story": "プログラムの世界 - Chapter 1"
+}

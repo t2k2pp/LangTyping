@@ -1,0 +1,8 @@
+{
+    "id": "6-1",
+    "level": 6,
+    "title": "⚡ 非同期処理 - Promiseの基礎",
+    "description": "あなたは既に上級者です！🏆 誇りに思ってください！\n非同期処理はモダンなJavaScriptの核心です。\nPromiseを使えば、複雑な処理も綺麗に書けます！Let's Go! 🎯",
+    "code": "const fetchData = () => {\n    return new Promise((resolve, reject) => {\n        setTimeout(() => {\n            resolve(\"Data loaded!\");\n        }, 1000);\n    });\n};\n\nfetchData()\n    .then(data => console.log(data))\n    .catch(err => console.error(err));",
+    "story": "マスターへの道 - 第2章"
+}

@@ -1,0 +1,8 @@
+{
+    "id": "3-1",
+    "level": 3,
+    "title": "🔁 for文でループ処理",
+    "description": "いよいよ中級編です！💪 頑張りましょう！\nループ処理を使えば、同じ処理を繰り返すことができます。\nプログラミングの基本中の基本。しっかりマスターしましょう！✨",
+    "code": "for (let i = 0; i < 5; i++) {\n    console.log(\"Count: \" + i);\n}\n\nconst numbers = [1, 2, 3, 4, 5];\nfor (const num of numbers) {\n    console.log(num * 2);\n}",
+    "story": "プログラムの世界 - Chapter 1"
+}

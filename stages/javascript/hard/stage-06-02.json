@@ -1,0 +1,8 @@
+{
+    "id": "6-2",
+    "level": 6,
+    "title": "🌟 async/await - 究極の非同期",
+    "description": "Promiseをマスターしましたね！信じられません！🎊\nasync/awaitを使えば、非同期コードが同期的に書けます。\n最もモダンで読みやすいコードが書けるようになります！Amazing! ✨",
+    "code": "const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));\n\nasync function processData() {\n    console.log(\"Starting...\");\n    await delay(1000);\n    console.log(\"Processing...\");\n    await delay(1000);\n    console.log(\"Done!\");\n}\n\nprocessData();",
+    "story": "マスターへの道 - 第2章"
+}

@@ -1,0 +1,8 @@
+{
+    "id": "4-2",
+    "level": 4,
+    "title": "🔧 分割代入 - 便利な構文",
+    "description": "オブジェクトをマスターしましたね！素晴らしい！✨\n分割代入を使えば、オブジェクトや配列から値を取り出すのがとても簡単になります。\nモダンなJavaScriptには欠かせない技術です！💪",
+    "code": "const person = { name: \"Bob\", age: 30, city: \"Tokyo\" };\nconst { name, age } = person;\n\nconst colors = [\"red\", \"green\", \"blue\"];\nconst [first, second] = colors;\n\nconsole.log(name, age);",
+    "story": "プログラムの世界 - Chapter 2"
+}

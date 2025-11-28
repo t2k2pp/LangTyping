@@ -1,0 +1,8 @@
+{
+    "id": "4-1",
+    "level": 4,
+    "title": "🎨 オブジェクトの作成",
+    "description": "おめでとうございます！🎊 中級者の仲間入りです！\nオブジェクトを使えば、関連するデータをまとめて管理できます。\n実践的なプログラミングへの大きな一歩です！Go for it! 🚀",
+    "code": "const user = {\n    name: \"Alice\",\n    age: 25,\n    greet: function() {\n        return `Hi, I'm ${this.name}!`;\n    }\n};\n\nconsole.log(user.greet());",
+    "story": "プログラムの世界 - Chapter 2"
+}

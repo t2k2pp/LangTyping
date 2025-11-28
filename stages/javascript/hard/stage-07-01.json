@@ -1,0 +1,8 @@
+{
+    "id": "7-1",
+    "level": 7,
+    "title": "🎯 完全版 - Todoアプリのロジック",
+    "description": "ここまで来たあなたは真のJavaScriptマスターです！🏆\n実践的なTodoアプリのロジックを実装しましょう。\nこれまで学んだすべての技術を使います！You're a Star! ⭐",
+    "code": "class TodoList {\n    constructor() {\n        this.todos = [];\n    }\n    \n    add(task) {\n        this.todos.push({ id: Date.now(), task, done: false });\n    }\n    \n    toggle(id) {\n        const todo = this.todos.find(t => t.id === id);\n        if (todo) todo.done = !todo.done;\n    }\n    \n    remove(id) {\n        this.todos = this.todos.filter(t => t.id !== id);\n    }\n}\n\nconst list = new TodoList();\nlist.add(\"Learn JavaScript\");",
+    "story": "マスターへの道 - 最終章"
+}
