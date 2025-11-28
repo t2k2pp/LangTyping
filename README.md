@@ -1,113 +1,222 @@
-# Code Typing Master - タイピング学習アプリ
+# 🎯 Code Typing Master
 
-プログラミング言語とタイピングを同時に学べる、モダンなWebベースの学習アプリケーションです。
+プログラミング言語とタイピングスキルを同時に向上させる学習アプリケーション
 
-![Code Typing Master](https://img.shields.io/badge/language-JavaScript-yellow)
-![Code Typing Master](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![JavaScript](https://img.shields.io/badge/javascript-ES6+-yellow.svg)
 
-## 🎯 特徴
+## ✨ 特徴
 
-- **19のプログラミング言語に対応**: JavaScript, React, Node.js, C, C++, C#, Rust, SQL, COBOL, Shell, JSON, XML, YAML, CSV, TOML, PowerShell, DOSなど
-- **3段階の難易度**: Easy（50-100文字）、Medium（100-250文字）、Hard（250-500文字）
-- **ソフトウェアキーボード表示**: タイプしたキーがリアルタイムでハイライト表示され、誤タイプに気づきやすい
-- **VS Code風のエディター**: コードエディターのような美しいUIでタイピング練習
-- **正確性重視のスコアリング**: 速さよりも正確性を重視した評価システム
-- **リアルタイム統計**: 正確性、CPM、誤タイプ数をリアルタイムで表示
+- 📚 **多言語対応**: JavaScript、C言語、その他19言語をサポート
+- 🎮 **ステージシステム**: 段階的に学べる豊富なコンテンツ
+- 🏆 **ハイスコア管理**: ステージごとにベストスコアを記録
+- ⌨️ **リアルタイムフィードバック**: タイピング速度と正確性を即座に表示
+- 🎨 **モダンなUI**: VSCode風のダークテーマ
+- 📱 **レスポンシブデザイン**: モバイルからデスクトップまで対応
 
-## 🚀 使い方
+## 🚀 クイックスタート
 
-### インストール不要！
+### 必要要件
 
-このアプリケーションは純粋なHTML/CSS/JavaScriptで作られているため、インストール不要です。
+- モダンなWebブラウザ (Chrome, Firefox, Safari, Edge)
+- ローカルサーバー (開発時)
 
-1. リポジトリをクローンまたはダウンロード
+### インストール
+
 ```bash
+# リポジトリをクローン
 git clone https://github.com/t2k2pp/LangTyping.git
+
+# ディレクトリに移動
 cd LangTyping
+
+# ローカルサーバーで起動
+# Python 3の場合
+python -m http.server 8000
+
+# または Node.jsの場合
+npx serve
 ```
 
-2. ブラウザで `index.html` を開く
-```bash
-# Windowsの場合
-start index.html
+ブラウザで `http://localhost:8000` にアクセス
 
-# macOS/Linuxの場合
-open index.html
-```
-
-### 使用方法
-
-1. **言語を選択**: ドロップダウンから学習したいプログラミング言語を選択
-2. **難易度を選択**: Easy / Medium / Hard から選択
-3. **スタートボタンをクリック**: タイピングセッション開始
-4. **コードをタイプ**: 表示されたコードを正確にタイプ
-5. **結果を確認**: 完了後、スコア、ランク、統計情報が表示されます
-
-## 📊 スコアリングシステム
-
-スコア計算式:
-```
-Score = Accuracy² × CPM × Difficulty Multiplier
-```
-
-- **Accuracy（正確性）**: 正しくタイプした文字の割合（二乗でペナルティ強化）
-- **CPM**: Characters Per Minute（1分あたりの文字数）
-- **Difficulty Multiplier**: Easy=1.0x, Medium=1.5x, Hard=2.0x
-
-### ランク評価
-- **S**: 500点以上（正確性90%以上）
-- **A**: 350点以上（正確性90%以上）
-- **B**: 200点以上（正確性90%以上）
-- **C**: 正確性80%以上
-- **D**: 正確性80%未満
-
-## 🛠️ 技術スタック
-
-- **HTML5**: セマンティックなマークアップ
-- **CSS3**: カスタムプロパティ、グラデーション、アニメーション
-- **Vanilla JavaScript**: フレームワーク不要のピュアなJavaScript
-- **Google Fonts**: Inter（UI）、JetBrains Mono（コード）
-
-## 📁 ファイル構成
+## 📁 プロジェクト構造
 
 ```
 LangTyping/
-├── index.html          # メインHTMLファイル
+├── index.html          # メインHTML
 ├── style.css           # スタイルシート
-├── app.js              # アプリケーション制御
-├── keyboard.js         # ソフトウェアキーボード
-├── typing-engine.js    # タイピングエンジン
-├── scoring.js          # スコアリングシステム
-├── samples.js          # コードサンプルデータベース
-└── README.md           # このファイル
+├── app.js             # アプリケーションコントローラー
+├── stages.js          # ステージデータローダー
+├── keyboard.js        # ソフトウェアキーボード
+├── typing-engine.js   # タイピングエンジン
+├── scoring.js         # スコアリングシステム
+├── samples.js         # レガシーコードサンプル
+└── stages/            # ステージデータ（JSON）
+    ├── javascript/
+    │   ├── easy/
+    │   │   ├── stage-00-01.json  # 予約語
+    │   │   ├── stage-01-01.json  # Hello World
+    │   │   ├── stage-01-02.json  # 変数
+    │   │   └── ...
+    │   ├── medium/
+    │   └── hard/
+    └── c/
+        ├── easy/
+        ├── medium/
+        └── hard/
 ```
 
-## 🎨 デザイン
+## 🎮 使い方
 
-- **VS Code風のダークテーマ**: プログラマーに馴染みのあるデザイン
-- **モダンなグラデーション**: 美しいビジュアル効果
-- **スムーズなアニメーション**: キー押下、画面遷移など
-- **レスポンシブデザイン**: モバイルデバイスにも対応
+### 基本的な流れ
 
-## 🌐 対応ブラウザ
+1. **言語を選択**: JavaScript、C言語など
+2. **難易度を選択**: Easy、Medium、Hard
+3. **モードを選択**:
+   - **ランダムモード**: 難易度内でランダムなステージ
+   - **ステージ選択モード**: 個別にステージを選ぶ
+4. **タイピング開始**: 表示されたコードを正確に入力
+5. **結果を確認**: スコア、正確性、速度を表示
 
-- Chrome（推奨）
-- Firefox
-- Safari
-- Edge
+### スコアリング
 
-## 📝 ライセンス
+スコアは以下の要素で計算されます：
 
-MIT License
+- **正確性**: 正しく入力した文字の割合
+- **速度**: CPM (Characters Per Minute)
+- **難易度**: Easy (1.0x), Medium (1.5x), Hard (2.0x)
+
+ランク判定：
+- **S**: 95%以上の正確性
+- **A**: 85%以上
+- **B**: 75%以上
+- **C**: 65%以上
+- **D**: それ以下
+
+## 📚 ステージシステム
+
+### データ構造
+
+各ステージはJSONファイルとして管理されています：
+
+```json
+{
+  "id": "1-1",
+  "level": 1,
+  "title": "🎯 Hello World！JavaScriptの第一歩",
+  "description": "説明文...",
+  "code": "console.log(\"Hello, World!\");",
+  "story": null
+}
+```
+
+### ステージの追加方法
+
+1. 適切なディレクトリに移動:
+   ```
+   stages/[language]/[difficulty]/
+   ```
+
+2. 新しいJSONファイルを作成:
+   ```
+   stage-XX-XX.json
+   ```
+
+3. ステージ情報を記述
+
+4. `stages.js`の`getStageFileList`にファイル名を追加
+
+## 🔧 開発
+
+### 技術スタック
+
+- **HTML5**: セマンティックマークアップ
+- **CSS3**: Flexbox, Grid, Custom Properties
+- **JavaScript ES6+**: Async/Await, Modules, Classes
+
+### 主要コンポーネント
+
+#### App (app.js)
+- アプリケーション全体の制御
+- 画面遷移管理
+- イベントハンドリング
+
+#### StageDatabase (stages.js)
+- JSONファイルからステージデータを読み込み
+- キャッシュ機能
+- 非同期データ取得
+
+#### TypingEngine (typing-engine.js)
+- キー入力の検証
+- 進捗管理
+- コードレンダリング
+
+#### SoftwareKeyboard (keyboard.js)
+- ソフトウェアキーボードの表示
+- Shift/CapsLock対応
+- 日本語配列サポート
+
+#### ScoringSystem (scoring.js)
+- スコア計算
+- ランク判定
+- 統計情報
+
+### カスタマイズ
+
+#### 新しい言語を追加
+
+1. `stages/[new-language]/`ディレクトリを作成
+2. `easy/`, `medium/`, `hard/`サブディレクトリを作成
+3. ステージJSONファイルを追加
+4. `app.js`の`getFileExtension`にファイル拡張子を追加
+
+#### テーマのカスタマイズ
+
+`style.css`の`:root`セクションでカラーパレットを変更：
+
+```css
+:root {
+    --color-bg-primary: #1e1e1e;
+    --color-accent-primary: #007acc;
+    /* ... */
+}
+```
 
 ## 🤝 コントリビューション
 
-プルリクエスト、イシュー、フィードバックを歓迎します！
+プルリクエスト大歓迎！
 
-## 🔗 リンク
+1. このリポジトリをフォーク
+2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
 
-- [GitHub Repository](https://github.com/t2k2pp/LangTyping)
+### ステージの追加
+
+新しいステージを追加したい場合：
+- `stages/`ディレクトリに適切なJSONファイルを追加
+- プルリクエストを送信
+
+## 📝 ライセンス
+
+MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
+
+## 👤 作成者
+
+**t2k2pp**  
+GitHub: [@t2k2pp](https://github.com/t2k2pp)
+
+## 🙏 謝辞
+
+- [JetBrains Mono](https://www.jetbrains.com/lp/mono/) - コードフォント
+- [Google Fonts](https://fonts.google.com/) - UIフォント
+
+## 📮 連絡先
+
+質問や提案がある場合は、GitHubのIssuesでお願いします。
 
 ---
 
-**Happy Typing! 🎉**
+⭐ このプロジェクトが役に立ったら、スターをお願いします！

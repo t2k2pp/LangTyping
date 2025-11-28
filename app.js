@@ -1,4 +1,4 @@
-// Main Application Controller with Stage System
+// Main Application Controller with JSON-based Stage System
 const App = {
     state: {
         language: 'javascript',
@@ -95,30 +95,29 @@ const App = {
         });
     },
 
-    handleStart() {
+    async handleStart() {
         if (this.state.mode === 'select') {
             // Show stage selection screen
-            this.showStageSelection();
+            await this.showStageSelection();
         } else {
             // Random mode - pick random stage and show preview
-            const stage = this.getRandomStage();
+            const stage = await this.getRandomStage();
             if (stage) {
                 this.showPreview(stage);
+            } else {
+                alert('ステージが見つかりませんでした。');
             }
         }
     },
 
-    getRandomStage() {
+    async getRandomStage() {
         const lang = this.state.language;
         const diff = this.state.difficulty;
 
-        // Check if stages exist
-        if (StageDatabase[lang] && StageDatabase[lang][diff] && StageDatabase[lang][diff].stages) {
-            const stages = StageDatabase[lang][diff].stages;
-            if (stages.length > 0) {
-                const randomIndex = Math.floor(Math.random() * stages.length);
-                return stages[randomIndex];
-            }
+        // Load stage from JSON files
+        const stage = await StageDatabase.getRandomStage(lang, diff);
+        if (stage) {
+            return stage;
         }
 
         // Fallback to old samples.js if no stages
@@ -136,19 +135,25 @@ const App = {
         return null;
     },
 
-    showStageSelection() {
+    async showStageSelection() {
         const lang = this.state.language;
         const diff = this.state.difficulty;
         const stageList = document.getElementById('stage-list');
-        stageList.innerHTML = '';
 
-        if (!StageDatabase[lang] || !StageDatabase[lang][diff] || !StageDatabase[lang][diff].stages) {
-            stageList.innerHTML = '<p style="text-align: center; color: var(--color-text-tertiary);">このlanguage/difficultyにはステージがありません。</p>';
-            this.showScreen('stage-select-screen');
+        // Show loading message
+        stageList.innerHTML = '<p style="text-align: center; color: var(--color-text-tertiary); padding: 2rem;">読み込み中...</p>';
+        this.showScreen('stage-select-screen');
+
+        // Load stages from JSON files
+        const stages = await StageDatabase.loadStages(lang, diff);
+
+        if (stages.length === 0) {
+            stageList.innerHTML = '<p style="text-align: center; color: var(--color-text-tertiary); padding: 2rem;">このlanguage/difficultyにはステージがありません。</p>';
             return;
         }
 
-        const stages = StageDatabase[lang][diff].stages;
+        // Clear loading message and build stage list
+        stageList.innerHTML = '';
 
         stages.forEach(stage => {
             const stageItem = document.createElement('div');
@@ -173,8 +178,6 @@ const App = {
 
             stageList.appendChild(stageItem);
         });
-
-        this.showScreen('stage-select-screen');
     },
 
     showPreview(stage) {
