@@ -1,0 +1,8 @@
+{
+    "id": "1-2",
+    "level": 1,
+    "title": "📝 変数の宣言 - データを保存しよう",
+    "description": "すごい！Hello Worldができました！🎉\n次は変数の使い方を学びましょう。変数はデータを保存する箱のようなもの。\nconst、let、varの3つの方法があります。頑張って！🚀",
+    "code": "const name = \"JavaScript\";\nlet version = 2024;\nvar isAwesome = true;",
+    "story": null
+}

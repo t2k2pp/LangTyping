@@ -1,0 +1,8 @@
+{
+    "id": "1-3",
+    "level": 1,
+    "title": "➕ 簡単な計算をしてみよう",
+    "description": "いい調子です！👏\nJavaScriptは計算も得意です。足し算、引き算、掛け算、割り算…なんでもできます！\n変数を使った計算をマスターしましょう！💯",
+    "code": "const a = 10;\nconst b = 5;\nconst sum = a + b;\nconsole.log(sum);",
+    "story": null
+}

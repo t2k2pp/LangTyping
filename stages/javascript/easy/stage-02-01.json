@@ -1,0 +1,8 @@
+{
+    "id": "2-1",
+    "level": 2,
+    "title": "🔄 関数を作ろう - コードの再利用",
+    "description": "基本はバッチリですね！✨\nさあ、次のステップは関数です。関数を使えば、同じコードを何度も書く必要がなくなります。\n効率的なプログラミングの第一歩です！頑張りましょう！🎯",
+    "code": "function greet(name) {\n    return \"Hello, \" + name + \"!\";\n}\n\nconst message = greet(\"World\");",
+    "story": null
+}

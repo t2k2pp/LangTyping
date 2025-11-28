@@ -1,0 +1,8 @@
+{
+    "id": "1-1",
+    "level": 1,
+    "title": "🎯 Hello World！JavaScriptの第一歩",
+    "description": "さあ、JavaScriptの世界へようこそ！✨\n最初のお題はプログラミングの定番、Hello World！コンソールにメッセージを表示するシンプルなコードです。\nこれがあなたのJavaScript人生の始まりです！Let's Try! 💪",
+    "code": "console.log(\"Hello, World!\");",
+    "story": null
+}

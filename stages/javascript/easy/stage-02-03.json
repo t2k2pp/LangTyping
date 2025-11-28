@@ -1,0 +1,8 @@
+{
+    "id": "2-3",
+    "level": 2,
+    "title": "📦 配列の基本 - データをまとめよう",
+    "description": "順調に進んでいますね！素晴らしい！🌟\n配列を使えば、複数のデータを一つにまとめて管理できます。\nプログラミングの幅がグッと広がりますよ！Let's Go! 🚀",
+    "code": "const fruits = [\"apple\", \"banana\", \"orange\"];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);",
+    "story": null
+}
