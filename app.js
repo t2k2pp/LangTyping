@@ -14,6 +14,7 @@ const App = {
     init() {
         this.setupEventListeners();
         SoftwareKeyboard.init();
+        this.initTheme();
     },
 
     setupEventListeners() {
@@ -21,6 +22,14 @@ const App = {
         document.getElementById('language-select').addEventListener('change', (e) => {
             this.state.language = e.target.value;
         });
+
+        // Theme toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                this.toggleTheme();
+            });
+        }
 
         // Difficulty selection
         document.querySelectorAll('.difficulty-btn').forEach(btn => {
@@ -43,6 +52,16 @@ const App = {
         // Start button
         document.getElementById('start-btn').addEventListener('click', () => {
             this.handleStart();
+        });
+
+        // Achievements button
+        document.getElementById('achievements-btn').addEventListener('click', () => {
+            this.showAchievements();
+        });
+
+        // Back from achievements
+        document.getElementById('back-from-achievements').addEventListener('click', () => {
+            this.showScreen('selection-screen');
         });
 
         // Back from stages
@@ -306,6 +325,23 @@ const App = {
             this.state.currentCode.length
         );
 
+        // Achievement Update
+        const achievementData = {
+            ...result,
+            language: this.state.language,
+            stageId: this.state.currentStage ? this.state.currentStage.id : 'legacy',
+            totalKeystrokes: TypingEngine.totalKeystrokes
+        };
+
+        const newAchievements = AchievementSystem.updateStats(achievementData);
+        if (newAchievements.length > 0) {
+            newAchievements.forEach((achievement, index) => {
+                setTimeout(() => {
+                    this.showAchievementNotification(achievement);
+                }, index * 4500); // Multiple achievements shown sequentially
+            });
+        }
+
         this.showResults(result, elapsed);
     },
 
@@ -379,11 +415,73 @@ const App = {
         return this.state.isTypingActive;
     },
 
+    showAchievements() {
+        const list = document.getElementById('achievements-list');
+        list.innerHTML = '';
+
+        const achievements = AchievementSystem.getAllAchievements();
+        const progress = AchievementSystem.getProgress();
+
+        // Update stats
+        document.getElementById('total-achievements').textContent = `${progress.unlocked}/${progress.total}`;
+        document.getElementById('achievement-progress').style.width = `${progress.percentage}%`;
+
+        achievements.forEach(achievement => {
+            const card = document.createElement('div');
+            card.className = `achievement-card ${achievement.unlocked ? 'unlocked' : ''}`;
+
+            card.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-info">
+                    <div class="achievement-title">${achievement.title}</div>
+                    <div class="achievement-desc">${achievement.description}</div>
+                </div>
+            `;
+
+            list.appendChild(card);
+        });
+
+        this.showScreen('achievements-screen');
+    },
+
+    showAchievementNotification(achievement) {
+        const notification = document.getElementById('achievement-notification');
+        document.getElementById('notification-name').textContent = achievement.title;
+
+        notification.classList.add('show');
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 4000);
+    },
+
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.remove('active');
         });
         document.getElementById(screenId).classList.add('active');
+    },
+
+    initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        this.updateThemeIcon(savedTheme);
+    },
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        this.updateThemeIcon(newTheme);
+    },
+
+    updateThemeIcon(theme) {
+        const btn = document.getElementById('theme-toggle');
+        if (btn) {
+            btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
     }
 };
 

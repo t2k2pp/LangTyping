@@ -70,201 +70,285 @@
                             <span class="mode-desc">難易度内でランダム</span>
                         </button>
                         <button class="mode-btn" data-mode="select">
-                            <span class="mode-label">ステージ選択</span>
-                            <span class="mode-desc">個別に選ぶ</span>
-                        </button>
-                    </div>
-                </div>
+                            <!DOCTYPE html>
+                            <html lang="ja">
 
-                <button id="start-btn" class="start-btn">
-                    <span class="btn-text">スタート</span>
-                    <span class="btn-icon">→</span>
-                </button>
-            </div>
-        </div>
-    </div>
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Code Typing Master - タイピング学習アプリ</title>
+                                <meta name="description" content="プログラミング言語とタイピングを同時に学べる学習アプリ">
+                                <link rel="preconnect" href="https://fonts.googleapis.com">
+                                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                                <link
+                                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+                                    rel="stylesheet">
+                                <link rel="stylesheet" href="style.css">
+                            </head>
 
-    <!-- Stage Select Screen -->
-    <div id="stage-select-screen" class="screen">
-        <div class="stage-select-container">
-            <h2 class="screen-title">
-                <span class="back-btn" id="back-from-stages">←</span>
-                ステージ選択
-            </h2>
-            <div id="stage-list" class="stage-list"></div>
-        </div>
-    </div>
+                            <body>
+                                <!-- Selection Screen -->
+                                <div id="selection-screen" class="screen active">
+                                    <div class="selection-container">
+                                        <h1 class="app-title">
+                                            <span class="title-icon">⌨️</span>
+                                            Code Typing Master
+                                        </h1>
+                                        <p class="app-subtitle">タイピングとプログラミングを同時に学ぶ</p>
 
-    <!-- Stage Preview Screen -->
-    <div id="preview-screen" class="screen">
-        <div class="preview-container">
-            <div class="preview-card">
-                <div class="preview-header">
-                    <span class="stage-number" id="preview-stage-number">1-1</span>
-                    <span class="highscore-badge" id="preview-highscore" style="display: none;">
-                        🏆 ハイスコア: <span id="preview-hs-value">0</span>
-                    </span>
-                </div>
-                <h2 class="preview-title" id="preview-title"></h2>
-                <div class="preview-description" id="preview-description"></div>
-                <div class="preview-code-sample">
-                    <div class="preview-label">📝 コードプレビュー</div>
-                    <pre id="preview-code"></pre>
-                </div>
-                <div class="preview-actions">
-                    <button class="preview-btn secondary" id="cancel-preview-btn">
-                        <span>キャンセル</span>
-                    </button>
-                    <button class="preview-btn primary" id="start-stage-btn">
-                        <span>スタート！</span>
-                        <span>🚀</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                                        <div class="selection-card">
+                                            <div class="form-group">
+                                                <label for="language-select" class="form-label">
+                                                    <span class="label-icon">💻</span>
+                                                    言語を選択
+                                                </label>
+                                                <select id="language-select" class="select-input">
+                                                    <option value="javascript" selected>JavaScript</option>
+                                                    <option value="python">Python 🐍</option>
+                                                    <option value="c">C Language</option>
+                                                    <option value="english">English - 英語</option>
+                                                </select>
+                                            </div>
 
-    <!-- Typing Screen -->
-    <div id="typing-screen" class="screen">
-        <div class="typing-container">
-            <!-- Header -->
-            <div class="typing-header">
-                <div class="header-info">
-                    <span class="language-badge" id="current-language">JavaScript</span>
-                    <span class="difficulty-badge" id="current-difficulty">Easy</span>
-                    <span class="stage-badge" id="current-stage" style="display: none;">1-1</span>
-                </div>
-                <div class="timer-display">
-                    <span class="timer-icon">⏱️</span>
-                    <span id="timer">0:00</span>
-                </div>
-            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    <span class="label-icon">📊</span>
+                                                    難易度を選択
+                                                </label>
+                                                <div class="difficulty-buttons">
+                                                    <button class="difficulty-btn active" data-difficulty="easy">
+                                                        <span class="difficulty-label">Easy</span>
+                                                        <span class="difficulty-desc">初級レベル</span>
+                                                    </button>
+                                                    <button class="difficulty-btn" data-difficulty="medium">
+                                                        <span class="difficulty-label">Medium</span>
+                                                        <span class="difficulty-desc">中級レベル</span>
+                                                    </button>
+                                                    <button class="difficulty-btn" data-difficulty="hard">
+                                                        <span class="difficulty-label">Hard</span>
+                                                        <span class="difficulty-desc">上級レベル</span>
+                                                    </button>
+                                                </div>
+                                            </div>
 
-            <!-- Code Editor Area -->
-            <div class="code-editor">
-                <div class="editor-header">
-                    <div class="editor-tabs">
-                        <div class="editor-tab active">
-                            <span class="tab-icon">📄</span>
-                            <span id="file-name">main.js</span>
-                        </div>
-                    </div>
-                    <div class="editor-actions">
-                        <button class="editor-action-btn" id="restart-btn" title="最初からやり直す">
-                            <span>↻</span>
-                        </button>
-                        <button class="editor-action-btn" id="exit-btn" title="終了">
-                            <span>✕</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="editor-content">
-                    <div class="line-numbers" id="line-numbers"></div>
-                    <pre class="code-text" id="code-text"></pre>
-                </div>
-                <div class="editor-footer">
-                    <div class="stats">
-                        <span class="stat-item">
-                            <span class="stat-label">正確性:</span>
-                            <span id="accuracy">100%</span>
-                        </span>
-                        <span class="stat-item">
-                            <span class="stat-label">速度:</span>
-                            <span id="speed">0 CPM</span>
-                        </span>
-                        <span class="stat-item">
-                            <span class="stat-label">誤タイプ:</span>
-                            <span id="errors">0</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    <span class="label-icon">🎮</span>
+                                                    選択モード
+                                                </label>
+                                                <div class="mode-buttons">
+                                                    <button class="mode-btn active" data-mode="random">
+                                                        <span class="mode-label">ランダム</span>
+                                                        <span class="mode-desc">難易度内でランダム</span>
+                                                    </button>
+                                                    <button class="mode-btn" data-mode="select">
+                                                        <span class="mode-label">ステージ選択</span>
+                                                        <span class="mode-desc">個別に選ぶ</span>
+                                                    </button>
+                                                </div>
+                                            </div>
 
-            <!-- Software Keyboard -->
-            <div class="keyboard-container">
-                <div id="software-keyboard"></div>
-            </div>
-        </div>
-    </div>
+                                            <div class="action-buttons">
+                                                <button id="achievements-btn" class="secondary-btn">
+                                                    <span class="btn-icon">🏆</span>
+                                                    <span class="btn-text">実績</span>
+                                                </button>
+                                                <button id="start-btn" class="start-btn">
+                                                    <span class="btn-text">スタート</span>
+                                                    <span class="btn-icon">→</span>
+                                                </button>
+                                            </div>
 
-    <!-- Results Screen -->
-    <div id="results-screen" class="screen">
-        <div class="results-container">
-            <div class="results-card">
-                <h2 class="results-title">結果</h2>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <!-- New Record Badge -->
-                <div class="new-record-badge" id="new-record-badge" style="display: none;">
-                    🎉 新記録達成！ 🎉
-                </div>
+                                <!-- Stage Select Screen -->
+                                <div id="stage-select-screen" class="screen">
+                                    <div class="stage-select-container">
+                                        <h2 class="screen-title">
+                                            <span class="back-btn" id="back-from-stages">←</span>
+                                            ステージ選択
+                                        </h2>
+                                        <div id="stage-list" class="stage-list"></div>
+                                    </div>
+                                </div>
 
-                <div class="score-display">
-                    <div class="score-circle">
-                        <svg class="score-ring" viewBox="0 0 200 200">
-                            <circle class="score-ring-bg" cx="100" cy="100" r="85"></circle>
-                            <circle class="score-ring-progress" id="score-ring" cx="100" cy="100" r="85"></circle>
-                        </svg>
-                        <div class="score-content">
-                            <div class="rank" id="rank">A</div>
-                            <div class="score-value" id="final-score">0</div>
-                        </div>
-                    </div>
-                </div>
+                                <!-- Stage Preview Screen -->
+                                <div id="preview-screen" class="screen">
+                                    <div class="preview-container">
+                                        <div class="preview-card">
+                                            <div class="preview-header">
+                                                <span class="stage-number" id="preview-stage-number">1-1</span>
+                                                <span class="highscore-badge" id="preview-highscore"
+                                                    style="display: none;">
+                                                    🏆 ハイスコア: <span id="preview-hs-value">0</span>
+                                                </span>
+                                            </div>
+                                            <h2 class="preview-title" id="preview-title"></h2>
+                                            <div class="preview-description" id="preview-description"></div>
+                                            <div class="preview-code-sample">
+                                                <div class="preview-label">📝 コードプレビュー</div>
+                                                <pre id="preview-code"></pre>
+                                            </div>
+                                            <div class="preview-actions">
+                                                <button class="preview-btn secondary" id="cancel-preview-btn">
+                                                    <span>キャンセル</span>
+                                                </button>
+                                                <button class="preview-btn primary" id="start-stage-btn">
+                                                    <span>スタート！</span>
+                                                    <span>🚀</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">⏱️</div>
-                        <div class="stat-value" id="result-time">0:00</div>
-                        <div class="stat-label">実行時間</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">✓</div>
-                        <div class="stat-value" id="result-accuracy">100%</div>
-                        <div class="stat-label">正確性</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">⚡</div>
-                        <div class="stat-value" id="result-speed">0</div>
-                        <div class="stat-label">CPM</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">❌</div>
-                        <div class="stat-value" id="result-errors">0</div>
-                        <div class="stat-label">誤タイプ</div>
-                    </div>
-                </div>
+                                <!-- Typing Screen -->
+                                <div id="typing-screen" class="screen">
+                                    <div class="typing-container">
+                                        <!-- Header -->
+                                        <div class="typing-header">
+                                            <div class="header-info">
+                                                <span class="language-badge" id="current-language">JavaScript</span>
+                                                <span class="difficulty-badge" id="current-difficulty">Easy</span>
+                                                <span class="stage-badge" id="current-stage"
+                                                    style="display: none;">1-1</span>
+                                            </div>
+                                            <div class="timer-display">
+                                                <span class="timer-icon">⏱️</span>
+                                                <span id="timer">0:00</span>
+                                            </div>
+                                        </div>
 
-                <!-- High Score Comparison -->
-                <div class="highscore-comparison" id="highscore-comparison" style="display: none;">
-                    <div class="comparison-title">📊 ハイスコア比較</div>
-                    <div class="comparison-row">
-                        <span class="comparison-label">今回:</span>
-                        <span class="comparison-value" id="current-score-display">0</span>
-                    </div>
-                    <div class="comparison-row">
-                        <span class="comparison-label">前回ベスト:</span>
-                        <span class="comparison-value" id="previous-best-display">0</span>
-                    </div>
-                </div>
+                                        <!-- Code Editor Area -->
+                                        <div class="code-editor">
+                                            <div class="editor-header">
+                                                <div class="editor-tabs">
+                                                    <div class="editor-tab active">
+                                                        <span class="tab-icon">📄</span>
+                                                        <span id="file-name">main.js</span>
+                                                    </div>
+                                                </div>
+                                                <div class="editor-actions">
+                                                    <button class="editor-action-btn" id="restart-btn" title="最初からやり直す">
+                                                        <span>↻</span>
+                                                    </button>
+                                                    <button class="editor-action-btn" id="exit-btn" title="終了">
+                                                        <span>✕</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="editor-content">
+                                                <div class="line-numbers" id="line-numbers"></div>
+                                                <pre class="code-text" id="code-text"></pre>
+                                            </div>
+                                            <div class="editor-footer">
+                                                <div class="stats">
+                                                    <span class="stat-item">
+                                                        <span class="stat-label">正確性:</span>
+                                                        <span id="accuracy">100%</span>
+                                                    </span>
+                                                    <span class="stat-item">
+                                                        <span class="stat-label">速度:</span>
+                                                        <span id="speed">0 CPM</span>
+                                                    </span>
+                                                    <span class="stat-item">
+                                                        <span class="stat-label">誤タイプ:</span>
+                                                        <span id="errors">0</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                <div class="results-actions">
-                    <button class="result-btn secondary" id="back-to-menu-btn">
-                        <span>メニューに戻る</span>
-                    </button>
-                    <button class="result-btn primary" id="retry-btn">
-                        <span>もう一度</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                                        <!-- Software Keyboard -->
+                                        <div class="keyboard-container">
+                                            <div id="software-keyboard"></div>
+                                        </div>
+                                    </div>
+                                </div>
 
-    <script src="stages.js"></script>
-    <script src="samples.js"></script>
-    <script src="keyboard.js"></script>
-    <script src="typing-engine.js"></script>
-    <script src="scoring.js"></script>
-    <script src="app.js"></script>
-</body>
+                                <!-- Results Screen -->
+                                <div id="results-screen" class="screen">
+                                    <div class="results-container">
+                                        <div class="results-card">
+                                            <h2 class="results-title">結果</h2>
 
-</html>
+                                            <!-- New Record Badge -->
+                                            <div class="new-record-badge" id="new-record-badge" style="display: none;">
+                                                🎉 新記録達成！ 🎉
+                                            </div>
+
+                                            <div class="score-display">
+                                                <div class="score-circle">
+                                                    <svg class="score-ring" viewBox="0 0 200 200">
+                                                        <circle class="score-ring-bg" cx="100" cy="100" r="85"></circle>
+                                                        <circle class="score-ring-progress" id="score-ring" cx="100"
+                                                            cy="100" r="85"></circle>
+                                                    </svg>
+                                                    <div class="score-content">
+                                                        <div class="rank" id="rank">A</div>
+                                                        <div class="score-value" id="final-score">0</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="stats-grid">
+                                                <div class="stat-card">
+                                                    <div class="stat-icon">⏱️</div>
+                                                    <div class="stat-value" id="result-time">0:00</div>
+                                                    <div class="stat-label">実行時間</div>
+                                                </div>
+                                                <div class="stat-card">
+                                                    <div class="stat-icon">✓</div>
+                                                    <div class="stat-value" id="result-accuracy">100%</div>
+                                                    <div class="stat-label">正確性</div>
+                                                </div>
+                                                <div class="stat-card">
+                                                    <div class="stat-icon">⚡</div>
+                                                    <div class="stat-value" id="result-speed">0</div>
+                                                    <div class="stat-label">CPM</div>
+                                                </div>
+                                                <div class="stat-card">
+                                                    <div class="stat-icon">❌</div>
+                                                    <div class="stat-value" id="result-errors">0</div>
+                                                    <div class="stat-label">誤タイプ</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- High Score Comparison -->
+                                            <div class="highscore-comparison" id="highscore-comparison"
+                                                style="display: none;">
+                                                <div class="comparison-title">📊 ハイスコア比較</div>
+                                                <div class="comparison-row">
+                                                    <span class="comparison-label">今回:</span>
+                                                    <span class="comparison-value" id="current-score-display">0</span>
+                                                </div>
+                                                <div class="comparison-row">
+                                                    <span class="comparison-label">前回ベスト:</span>
+                                                    <span class="comparison-value" id="previous-best-display">0</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="results-actions">
+                                                <button class="result-btn secondary" id="back-to-menu-btn">
+                                                    <span>メニューに戻る</span>
+                                                </button>
+                                                <button class="result-btn primary" id="retry-btn">
+                                                    <span>もう一度</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script src="stages.js"></script>
+                                <script src="samples.js"></script>
+                                <script src="keyboard.js"></script>
+                                <script src="typing-engine.js"></script>
+                                <script src="scoring.js"></script>
+                                <script src="achievements.js"></script>
+                                <script src="app.js"></script>
+                            </body>
+
+                            </html>

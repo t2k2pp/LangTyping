@@ -17,39 +17,9 @@
 - [x] ソフトウェアキーボード（Shift対応）
 - [x] リアルタイムフィードバック
 
-## 🔧 手動で修正が必要な項目
-
-### 1. index.htmlにPythonを追加
-
-`index.html` の33-37行目を以下のように変更：
-```html
-<select id="language-select" class="select-input">
-    <option value="javascript" selected>JavaScript</option>
-    <option value="python">Python 🐍</option>
-    <option value="c">C Language</option>
-    <option value="english">English - 英語</option>
-</select>
-```
-
-### 2. app.jsにPython拡張子を追加
-
-`app.js` の239-249行目の`getFileExtension`関数を以下のように変更：
-```javascript
-getFileExtension(lang) {
-    const extensions = {
-        javascript: 'js', react: 'jsx', nodejs: 'js',
-        python: 'py',  // ← この行を追加
-        c: 'c', cpp: 'cpp', csharp: 'cs',
-        rust: 'rs', sql: 'sql', cobol: 'cob',
-        bash: 'sh', cshell: 'csh',
-        json: 'json', xml: 'xml', yaml: 'yml',
-        csv: 'csv', toml: 'toml',
-        dos: 'bat', powershell: 'ps1',
-        english: 'txt'
-    };
-    return extensions[lang] || 'txt';
-},
-```
+### 統合完了
+- [x] index.htmlにPythonを追加
+- [x] app.jsにPython拡張子（.py）を追加
 
 ## 📋 今後の追加予定
 
